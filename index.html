@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Video Generator</title>
+</head>
+<body>
+  <h1>Text to Video Generator</h1>
+  <input type="text" id="prompt" placeholder="Enter your prompt">
+  <button onclick="generateVideo()">Generate Video</button>
+
+  <div id="status"></div>
+  <video id="video" controls style="display:none; width: 100%;"></video>
+
+  <!-- Directly embedding the script -->
+  <script>
+    async function generateVideo() {
+      const prompt = document.getElementById('prompt').value;
+      document.getElementById('status').innerText = "Generating video...";
+      document.getElementById('video').style.display = "none";
+
+      try {
+        const response = await fetch('/generate-video', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt })
+        });
+
+        const data = await response.json();
+
+        if (data.videoUrl) {
+          document.getElementById('video').src = data.videoUrl;
+          document.getElementById('video').style.display = "block";
+          document.getElementById('status').innerText = "Video ready!";
+        } else {
+          document.getElementById('status').innerText = "Error: " + data.error;
+        }
+      } catch (error) {
+        document.getElementById('status').innerText = "Error: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
