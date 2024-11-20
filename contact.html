@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your existing stylesheet -->
+</head>
+<body>
+    <header>
+        <div class="logo">Text to Video</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="contact.html" class="active">Contact</a>
+            <a href="info.html">Info</a>
+            <div class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact-section">
+            <h1>Contact Us</h1>
+            <p>If you have any questions, feel free to reach out to us by filling out the form below.</p>
+
+            <form class="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Restore dark mode state if set
+        const storedMode = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', storedMode);
+
+        // Toggle dark mode function (reuse from main page)
+        function toggleDarkMode() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+    </script>
+</body>
+</html>
