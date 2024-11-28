@@ -3,30 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Login Page</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your existing stylesheet -->
     <style>
-        .contact-container {
-            max-width: 600px;
+        .login-container {
+            max-width: 400px;
             margin: 100px auto;
             padding: 30px;
             background: var(--card-bg);
             border-radius: 15px;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
-        .contact-container h1 {
+        .login-container h1 {
             text-align: center;
             margin-bottom: 20px;
             color: var(--text-color);
         }
-        .contact-container label {
+        .login-container label {
             display: block;
             margin-bottom: 5px;
             color: var(--text-color);
         }
-        .contact-container input[type="text"],
-        .contact-container input[type="email"],
-        .contact-container textarea {
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -34,7 +33,7 @@
             border-radius: 10px;
             box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .contact-container button {
+        .login-container button {
             width: 100%;
             padding: 12px;
             background-image: linear-gradient(135deg, #6a11cb, #2575fc);
@@ -46,7 +45,7 @@
             cursor: pointer;
             transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
-        .contact-container button:hover {
+        .login-container button:hover {
             background-image: linear-gradient(135deg, #2575fc, #6a11cb);
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
@@ -58,28 +57,23 @@
         <div class="logo">Text to Video</div>
         <div class="nav-links">
             <a href="index.html">Home</a>
-            <a href="login.html">Login</a>
-            <a href="contact.html" class="active">Contact</a>
+            <a href="contact.html">Contact</a>
             <a href="info.html">Info</a>
             <div class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</div>
         </div>
     </header>
 
     <main>
-        <div class="contact-container">
-            <h1>Contact Us</h1>
-            <p>If you have any questions or inquiries, feel free to reach out by filling out the form below.</p>
-            <form class="contact-form">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+        <div class="login-container">
+            <h1>Login</h1>
+            <form class="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
 
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-
-                <button type="submit">Submit</button>
+                <button type="submit">Login</button>
             </form>
         </div>
     </main>
@@ -98,9 +92,9 @@
         }
 
         // Placeholder form submission handling
-        document.querySelector('.contact-form').addEventListener('submit', function(event) {
+        document.querySelector('.login-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form from submitting
-            alert('Thank you for contacting us, ' + document.getElementById('name').value + '! We will get back to you soon.');
+            alert('Logged in as ' + document.getElementById('username').value);
         });
     </script>
 </body>
