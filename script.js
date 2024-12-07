@@ -1,26 +1,36 @@
-// script.js  NOT BEING USED FOR NOW
+document.getElementById('generate-button').addEventListener('click', generateVideo);
+
 async function generateVideo() {
   const prompt = document.getElementById('prompt').value;
-  document.getElementById('status').innerText = "Generating video...";
-  document.getElementById('video').style.display = "none";
+  const status = document.getElementById('status');
+  const videos = document.querySelectorAll('video');
 
+  status.innerText = "Generating video...";
+  
   try {
     const response = await fetch('/generate-video', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({ prompt }),
     });
 
     const data = await response.json();
 
     if (data.videoUrl) {
-      document.getElementById('video').src = data.videoUrl;
-      document.getElementById('video').style.display = "block";
-      document.getElementById('status').innerText = "Video ready!";
+      // Find the first available video slot
+      const availableVideo = Array.from(videos).find(video => !video.src);
+      if (availableVideo) {
+        availableVideo.src = data.videoUrl;
+        availableVideo.style.display = "block";
+      } else {
+        alert("All video slots are full!");
+      }
+
+      status.innerText = "Video ready!";
     } else {
-      document.getElementById('status').innerText = "Error: " + data.error;
+      status.innerText = "Error: " + data.error;
     }
   } catch (error) {
-    document.getElementById('status').innerText = "Error: " + error.message;
+    status.innerText = "Error: " + error.message;
   }
 }

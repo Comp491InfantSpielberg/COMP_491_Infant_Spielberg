@@ -4,336 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Text to Video Generator</title>
-  <style>
-    :root {
-      --bg-color: #f4f4f9;
-      --text-color: #333;
-      --card-bg: #fff;
-      --button-bg: #007bff;
-      --button-hover-bg: #0056b3;
-    }
-
-    [data-theme="dark"] {
-      --bg-color: #1e1e1e;
-      --text-color: #ddd;
-      --card-bg: #2b2b2b;
-      --button-bg: #3b82f6;
-      --button-hover-bg: #2563eb;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background: var(--card-bg);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    header .logo {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-
-    header .nav-links {
-      display: flex;
-      gap: 15px;
-    }
-
-    header .nav-links a,
-    header .dark-mode-toggle {
-      text-decoration: none;
-      color: var(--text-color);
-      font-size: 1em;
-      padding: 5px 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-      cursor: pointer;
-    }
-
-    header .nav-links a:hover,
-    header .dark-mode-toggle:hover {
-      background-color: var(--button-bg);
-      color: #fff;
-    }
-
-    .carousel {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-      margin: 20px auto;
-    }
-
-    .carousel-content {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      will-change: transform;
-    }
-
-    .carousel-item {
-      flex: 0 0 100%;
-      display: none;
-    }
-
-    .carousel-item.active {
-      display: block;
-    }
-
-    .arrows {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      z-index: 10;
-    }
-
-    .arrows button {
-      background-color: var(--button-bg);
-      border: none;
-      color: white;
-      font-size: 1.5em;
-      cursor: pointer;
-      padding: 5px 10px;
-      border-radius: 50%;
-      transition: background-color 0.3s;
-    }
-
-    .arrows button:hover {
-      background-color: var(--button-hover-bg);
-    }
-
-    .dots {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      background: var(--card-bg);
-      border: 2px solid var(--button-bg);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .dot.active {
-      background-color: var(--button-bg);
-    }
-
-    .carousel-item textarea {
-      width: 100%;
-      height: 200px;
-      padding: 10px;
-      font-size: 1.2em;
-      border: 1px solid var(--text-color);
-      border-radius: 5px;
-      background: var(--card-bg);
-      color: var(--text-color);
-      resize: none;
-    }
-
-    .carousel-item button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: var(--button-bg);
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .carousel-item button:hover {
-      background-color: var(--button-hover-bg);
-    }
-
-    .video-gallery {
-      max-width: 1200px;
-      margin: 40px auto;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-
-    .video-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .video-card:hover {
-      transform: scale(1.05);
-    }
-
-    .video-card video {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .video-card p {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="logo">Text to Video</div>
-    <div class="nav-links">
-      <a href="#login">Login</a>
-      <a href="#info">Info</a>
-      <a href="#contact">Contact</a>
-      <div class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</div>
-    </div>
-  </header>
-
-  <div class="carousel">
-    <div class="arrows">
-      <button onclick="prev()">&#8249;</button>
-      <button onclick="next()">&#8250;</button>
-    </div>
-    <div class="carousel-content">
-      <div class="carousel-item active">
-        <h2>Video Generator</h2>
-        <textarea id="prompt" placeholder="Type your video prompt..."></textarea>
-        <button onclick="generateVideo()">Generate Video</button>
+  <!-- Fixed Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <h1>Text to Video Generator</h1>
+      <div class="top-buttons">
+        <button id="login-button">Login</button>
+        <button id="dark-mode-button">Dark Mode</button>
+        <button id="contact-button">Contact</button>
       </div>
-      <div class="carousel-item">
-        <h2>Story Generator</h2>
-        <textarea id="storyPrompt" placeholder="Type your story idea..."></textarea>
-        <button onclick="generateStory()">Generate Story</button>
-      </div>
-    </div>
-    <div class="dots">
-      <div class="dot active" onclick="gotoSlide(0)"></div>
-      <div class="dot" onclick="gotoSlide(1)"></div>
     </div>
   </div>
 
-  <div class="video-gallery">
-    <div class="video-card">
-      <video src="2_dogs_flying.mp4" autoplay muted loop></video>
-      <p>Video 1</p>
-    </div>
-    <div class="video-card">
-      <video src="video2.mp4" autoplay muted loop></video>
-      <p>Video 2</p>
-    </div>
-    <div class="video-card">
-      <video src="video3.mp4" autoplay muted loop></video>
-      <p>Video 3</p>
-    </div>
-    <div class="video-card">
-      <video src="video4.mp4" autoplay muted loop></video>
-      <p>Video 4</p>
-    </div>
-    <div class="video-card">
-      <video src="video5.mp4" autoplay muted loop></video>
-      <p>Video 5</p>
-    </div>
-    <div class="video-card">
-      <video src="video6.mp4" autoplay muted loop></video>
-      <p>Video 6</p>
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <div class="content-container">
+      <input type="text" id="prompt" placeholder="Enter your prompt">
+      <button id="generate-button">Generate Video</button>
+      <div id="status"></div>
+
+      <!-- Generated Video Section -->
+      <div class="video-container">
+        <video id="generated-video" controls style="display: none;">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Promotional Video Grid -->
+      <div class="video-advertisements">
+        <h2>Advertisement Videos</h2>
+        <div class="video-grid">
+          <div class="video-card">
+            <video src="2_dogs_flying.mp4" autoplay loop muted controls>
+              Your browser does not support the video tag.
+            </video>
+            <p>Video 1: Dogs Flying</p>
+          </div>
+          <div class="video-card">
+            <video src="bunny.mp4" autoplay loop muted controls>
+              Your browser does not support the video tag.
+            </video>
+            <p>Video 2: Sunset View</p>
+          </div>
+          <div class="video-card">
+            <video src="chess.mp4" autoplay loop muted controls>
+              Your browser does not support the video tag.
+            </video>
+            <p>Video 3: Cityscape</p>
+          </div>
+          <div class="video-card">
+            <video src="fish.mp4" autoplay loop muted controls>
+              Your browser does not support the video tag.
+            </video>
+            <p>Video 4: Nature Walk</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <script>
-    let currentSlide = 0;
-
-    // On page load, restore values from localStorage
-    window.onload = function() {
-      const storedPrompt = localStorage.getItem('prompt');
-      if (storedPrompt) {
-        document.getElementById('prompt').value = storedPrompt;
-      }
-      
-      const storedMode = localStorage.getItem('theme') || 'light';
-      document.body.setAttribute('data-theme', storedMode);
-      updateDarkModeIcon();
-    };
-
-    // Save prompt to localStorage
-    document.getElementById('prompt').addEventListener('input', function() {
-      localStorage.setItem('prompt', this.value);
-    });
-
-    // Dark mode toggle
-    function toggleDarkMode() {
-      const currentTheme = document.body.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.body.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateDarkModeIcon();
-    }
-
-    function updateDarkModeIcon() {
-      const darkModeIcon = document.querySelector('.dark-mode-toggle');
-      darkModeIcon.innerText = document.body.getAttribute('data-theme') === 'dark' ? '🌙' : '🌞';
-    }
-
-    // Carousel functions
-    function prev() {
-      currentSlide = (currentSlide === 0) ? 1 : 0;
-      updateCarousel();
-    }
-
-    function next() {
-      currentSlide = (currentSlide === 0) ? 1 : 0;
-      updateCarousel();
-    }
-
-    function gotoSlide(slideIndex) {
-      currentSlide = slideIndex;
-      updateCarousel();
-    }
-
-    function updateCarousel() {
-      const slides = document.querySelectorAll('.carousel-item');
-      const dots = document.querySelectorAll('.dot');
-
-      slides.forEach((slide, index) => {
-        slide.classList.toggle('active', index === currentSlide);
-        dots[index].classList.toggle('active', index === currentSlide);
-      });
-    }
-
-    // Placeholder functions for generating video or story
-    function generateVideo() {
-      alert("Video generated with prompt: " + document.getElementById('prompt').value);
-    }
-
-    function generateStory() {
-      alert("Story generated with prompt: " + document.getElementById('storyPrompt').value);
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
