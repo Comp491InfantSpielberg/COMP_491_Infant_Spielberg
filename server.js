@@ -106,7 +106,7 @@ app.listen(PORT, () => {
 });
 */
 
-
+/*
 const express = require('express');
 const path = require('path');
 const { LumaAI } = require('lumaai');
@@ -156,6 +156,128 @@ app.post('/generate-video', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+*/
+
+
+
+const express = require('express');
+const path = require('path');
+const { LumaAI } = require('lumaai');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+require('dotenv').config();
+
+const app = express();
+app.use(express.json());
+
+// Serve static files from the current directory (which is text-to-video-app)
+app.use(express.static(path.join(__dirname)));
+
+// LumaAI setup
+const client = new LumaAI({
+  authToken: process.env.LUMAAI_API_KEY
+});
+
+// Serve the HTML file on the root path
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Set a Content Security Policy header
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' 'unsafe-inline';"
+  );
+  next();
+});
+
+// Endpoint to generate video based on user prompt
+app.post('/generate-video', async (req, res) => {
+  const { prompt } = req.body;
+  try {
+    let generation = await client.generations.create({ prompt });
+
+    const checkGeneration = async () => {
+      // Wait for generation status
+      generation = await client.generations.get(generation.id);
+      if (generation.state === "completed") {
+        const videoUrl = generation.assets.video;
+        return res.json({ videoUrl });
+      } else if (generation.state === "failed") {
+        return res.status(500).json({ error: generation.failure_reason });
+      } else {
+        setTimeout(checkGeneration, 3000); // Poll every 3 seconds
+      }
+    };
+
+    // Start polling
+    checkGeneration();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Simulated in-memory "database" for posts
+const posts = [];
+
+// Endpoint to get all posts
+app.get('/api/posts', (req, res) => {
+  res.json(posts);
+});
+
+// Endpoint to get a single post by ID
+app.get('/api/posts/:id', (req, res) => {
+  const post = posts.find((p) => p.id === parseInt(req.params.id, 10));
+  if (!post) {
+    return res.status(404).json({ error: 'Post not found' });
+  }
+  res.json(post);
+});
+
+// Endpoint to create a post
+app.post('/api/posts', (req, res) => {
+  const { title, content } = req.body;
+  if (!title || !content) {
+    return res.status(400).json({ error: 'Title and content are required' });
+  }
+  const newPost = {
+    id: posts.length + 1,
+    title,
+    content,
+  };
+  posts.push(newPost);
+  res.status(201).json(newPost);
+});
+
+// Endpoint to update a post
+app.put('/api/posts/:id', (req, res) => {
+  const { title, content } = req.body;
+  const post = posts.find((p) => p.id === parseInt(req.params.id, 10));
+  if (!post) {
+    return res.status(404).json({ error: 'Post not found' });
+  }
+  if (!title || !content) {
+    return res.status(400).json({ error: 'Title and content are required' });
+  }
+  post.title = title;
+  post.content = content;
+  res.json(post);
+});
+
+// Endpoint to delete a post
+app.delete('/api/posts/:id', (req, res) => {
+  const postIndex = posts.findIndex((p) => p.id === parseInt(req.params.id, 10));
+  if (postIndex === -1) {
+    return res.status(404).json({ error: 'Post not found' });
+  }
+  posts.splice(postIndex, 1);
+  res.status(204).send();
 });
 
 const PORT = process.env.PORT || 3000;
