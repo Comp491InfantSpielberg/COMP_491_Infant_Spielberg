@@ -55,6 +55,10 @@ app.post('/register', async (req, res) => {
 
   app.post('/login', (req, res) => {
     const { email, password } = req.body;
+
+    setTimeout(() => {
+        console.log("Hello world!"); // This will print after 3 seconds
+      }, 30000);
   
     if (!email || !password) {
       return res.status(400).json({ error: 'All fields are required' });

@@ -25,9 +25,9 @@ document.getElementById('generate-button').addEventListener('click', generateVid
 async function generateVideo() {
   const prompt = document.getElementById('prompt').value;
   const status = document.getElementById('status');
-
-  status.innerText = "Generating video...";
-
+  console.log("Hello, World!");
+  status.innerText = "Generating video............";
+  console.log("Hello, World!");
   try {
     const response = await fetch('/generate-video', {
       method: 'POST',
@@ -72,6 +72,10 @@ async function generateVideo() {
 
 
 function showLoginPage() {
+  console.log("Hello, login!");
+  setTimeout(() => {
+    console.log("Hello world!"); // This will print after 3 seconds
+  }, 3000);
   const mainContent = document.getElementById('main-content');
   mainContent.innerHTML = `
     <h2>Login</h2>
@@ -82,21 +86,38 @@ function showLoginPage() {
     </form>
     <div id="login-status"></div>
   `;
-
-  document.getElementById('login-form').addEventListener('submit', loginUser);
 }
+
+document.getElementById('login-form').addEventListener('submit', loginUser);
+
 
 function loginUser(event) {
   event.preventDefault();
+  setTimeout(3000)
+  console.log("Hello world!1");
+
+  setTimeout(() => {
+    console.log("Hello world!2"); // This will print after 3 seconds
+  }, 3000);
+
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const status = document.getElementById('login-status');
+  console.log("Hello world!3");
 
-  status.innerText = "Logging in...";
+  if (status) {
+    status.innerText = "Logging in...";
+  } else {
+    console.log(password);
+    console.error('Login status element not found');
+  }
+  //status.innerText = "Logging in...";
+  alert('Please enter both email and password.');
 
   // Example login logic (replace with actual logic)
   if (email === "user@example.com" && password === "password123") {
-    status.innerText = "Login successful!";
+    
+    status.innerText = "Login successfasdfasul!";
     // You can redirect to another page or change the page content here
   } else {
     status.innerText = "Invalid credentials.";
