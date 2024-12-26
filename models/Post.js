@@ -12,13 +12,8 @@ const PostSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      maxLength: [80, "Must be no more than 80 characters"],
     },
-    content: {
-      type: String,
-      required: true,
-      maxLength: [8000, "Must be no more than 8000 characters"],
-    },
+
     likeCount: {
       type: Number,
       default: 0,
@@ -26,10 +21,6 @@ const PostSchema = new mongoose.Schema(
     commentCount: {
       type: Number,
       default: 0,
-    },
-    edited: {
-      type: Boolean,
-      default: false,
     },
   },
   { timestamps: true }
