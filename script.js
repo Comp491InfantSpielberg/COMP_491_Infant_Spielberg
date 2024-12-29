@@ -25,9 +25,9 @@ document.getElementById('generate-button').addEventListener('click', generateVid
 async function generateVideo() {
   const prompt = document.getElementById('prompt').value;
   const status = document.getElementById('status');
-  console.log("Hello, World!");
+  console.log("Hello, World! gernerate video");
   status.innerText = "Generating video............";
-  console.log("Hello, World!");
+  console.log("Hello, World! generate video ");
   try {
     const response = await fetch('/generate-video', {
       method: 'POST',
@@ -36,6 +36,7 @@ async function generateVideo() {
     });
 
     const data = await response.json();
+    console.log(data);
 
     if (data.error) {
       status.innerText = `Error: ${data.error}`;
@@ -70,7 +71,6 @@ async function generateVideo() {
 
 
 
-
 function showLoginPage() {
   console.log("Hello, login!");
   setTimeout(() => {
@@ -91,19 +91,31 @@ function showLoginPage() {
 document.getElementById('login-form').addEventListener('submit', loginUser);
 
 
-function loginUser(event) {
+async function loginUser(event) {
   event.preventDefault();
   setTimeout(3000)
   console.log("Hello world!1");
-
+/*
   setTimeout(() => {
     console.log("Hello world!2"); // This will print after 3 seconds
   }, 3000);
+  */
 
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const status = document.getElementById('login-status');
   console.log("Hello world!3");
+
+  const response = await fetch('/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt }),
+  });
+  console.log(response);
+
+  const data = await response.json();
+  console.log("Hello world!4");
+
 
   if (status) {
     status.innerText = "Logging in...";

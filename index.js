@@ -8,6 +8,10 @@ require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
 
+
+console.log('Query results33:', );  // `results` will be an array of rows
+
+
 // Helper to generate JWT tokens
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -55,9 +59,9 @@ app.post('/register', async (req, res) => {
 
   app.post('/login', (req, res) => {
     const { email, password } = req.body;
-
+    console.log("hello from js 333");
     setTimeout(() => {
-        console.log("Hello world!"); // This will print after 3 seconds
+        console.log("Hello world from js !"); // This will print after 3 seconds
       }, 30000);
   
     if (!email || !password) {

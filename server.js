@@ -134,6 +134,7 @@ app.use((req, res, next) => {
 });
 // Endpoint to generate video based on user prompt
 app.post('/generate-video', async (req, res) => {
+  console.log("ASDFASdf");
   const { prompt } = req.body;
   try {
     let generation = await client.generations.create({ prompt });
@@ -157,6 +158,36 @@ app.post('/generate-video', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  console.log("hello from js 333");
+  setTimeout(() => {
+      console.log("Hello world from js !"); // This will print after 3 seconds
+    }, 30000);
+
+  if (!email || !password) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+    if (err || results.length === 0) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const user = results[0];
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const token = generateToken(user.id);
+    res.json({ message: 'Login successful', token });
+  });
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
