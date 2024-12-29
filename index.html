@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Video Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Fixed Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <h1>COMP_491 Infant Spielberg</h1>
+      <div class="top-buttons">
+        <button id="main-page-button">Main Page</button>
+        <button id="login-button">Login</button>
+        <button id="contact-button">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <div class="content-container" id="content-container">
+      <!-- Default Main Page Content -->
+      <div id="main-page-content" class="page-content">
+        <div class="intro-container">
+          <h2>Welcome to Text to Video Generator</h2>
+          <p>Enter your prompt and watch it come to life as a video!</p>
+          <input type="text" id="prompt" placeholder="Enter your prompt">
+          <button id="generate-button">Generate Video</button>
+          <div id="status"></div>
+        </div>
+
+        <!-- Promotional Video Grid -->
+        <div class="video-advertisements">
+          <h2>Advertisement Videos</h2>
+          <div class="video-grid">
+            <div class="video-card">
+              <video src="2_dogs_flying.mp4" autoplay loop muted controls></video>
+              <p>Video 1: Dogs flying</p>
+            </div>
+            <div class="video-card">
+              <video src="bunny.mp4" autoplay loop muted controls></video>
+              <p>Video 2: Bunny on rainbow</p>
+            </div>
+            <div class="video-card">
+              <video src="chess.mp4" autoplay loop muted controls></video>
+              <p>Video 3: Chess playing kids</p>
+            </div>
+            <div class="video-card">
+              <video src="fish.mp4" autoplay loop muted controls></video>
+              <p>Video 4: Kid with fishes</p>
+            </div>
+            <div class="video-card">
+              <video src="adventure.mp4" autoplay loop muted controls></video>
+              <p>Video 5: Adventure time</p>
+            </div>
+            <div class="video-card">
+              <video src="football.mp4" autoplay loop muted controls></video>
+              <p>Video 6: Kid plays with aliens</p>
+            </div>
+            <div class="video-card">
+              <video src="f1.mp4" autoplay loop muted controls></video>
+              <p>Video 6: F1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Page Content -->
+      <div id="login-content" class="page-content" style="display: none;">
+        <h2>Login</h2>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <button type="submit" class="submit-button">Login</button>
+        </form>
+      </div>
+
+      <!-- Contact Page Content -->
+      <div id="contact-content" class="page-content" style="display: none;">
+        <h2>Contact Us</h2>
+        <form id="contact-form">
+          <div class="form-group">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="submit-button">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
