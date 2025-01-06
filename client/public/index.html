@@ -6,8 +6,152 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Share your AI generated videos here" />
     <title>Infant Spielberg</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+      }
+
+      #root {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .header img {
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: #ff6584;
+        margin: 0;
+        font-family: 'Baloo 2', cursive;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      button {
+        background: #ff6584;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      button:hover {
+        transform: scale(1.1);
+        background: #ff9a9e;
+      }
+
+      .childish-icons {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .childish-icons img {
+        width: 50px;
+        height: 50px;
+        margin: 0 10px;
+      }
+
+      footer {
+        text-align: center;
+        font-size: 1rem;
+        color: #555;
+        margin-top: 20px;
+      }
+
+      .progress-container {
+        margin: 20px auto;
+        width: 70%;
+        height: 20px;
+        background-color: #ffe6e6;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .progress-bar {
+        width: 0;
+        height: 100%;
+        background: #ff6584;
+        transition: width 1s ease;
+      }
+
+      .animated-header {
+        font-size: 1.5rem;
+        font-family: 'Baloo 2', cursive;
+        color: #6a11cb;
+        animation: glow 1.5s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px #6a11cb, 0 0 20px #6a11cb;
+        }
+        to {
+          text-shadow: 0 0 20px #2575fc, 0 0 30px #2575fc;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="header">
+        <img src="img/logo.webp" alt="Logo" />
+        <h1>Infant Spielberg</h1>
+      </div>
+      <div class="animated-header">Create Magical Videos!</div>
+      <div class="childish-icons">
+        <img src="/assets/star.png" alt="Star Icon" />
+        <img src="/assets/heart.png" alt="Heart Icon" />
+        <img src="/assets/smile.png" alt="Smile Icon" />
+      </div>
+      <button onclick="startProgress()">Generate Video</button>
+      <div class="progress-container">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+    </div>
+    <footer>
+      &copy; 2025 Infant Spielberg. All rights reserved.
+    </footer>
+
+    <script>
+      function startProgress() {
+        const progressBar = document.getElementById('progress-bar');
+        progressBar.style.width = '100%';
+      }
+    </script>
   </body>
 </html>
