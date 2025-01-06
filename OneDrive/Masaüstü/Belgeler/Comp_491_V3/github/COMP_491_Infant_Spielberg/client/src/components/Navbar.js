@@ -22,6 +22,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -114,6 +115,7 @@ const Navbar = () => {
               <IconButton component={Link} to={"/messenger"}>
                 <AiFillMessage />
               </IconButton>
+              <ThemeToggle />
               <IconButton component={Link}  to={"/users/" + username}>
                 <UserAvatar width={30} height={30} username={user.username} />
               </IconButton>
@@ -121,6 +123,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <ThemeToggle />
               <Button variant="text" sx={{ minWidth: 80 }} href="/signup">
                 Sign Up
               </Button>

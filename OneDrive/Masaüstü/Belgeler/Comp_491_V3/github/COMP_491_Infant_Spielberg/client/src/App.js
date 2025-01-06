@@ -5,7 +5,11 @@ import "react-icons/md";
 import "react-icons/bs";
 import "react-router-dom";
 import { CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from './contexts/ThemeContext';
+import { createAppTheme } from './theme';
+import { useContext } from 'react';
+import { ThemeContext } from './contexts/ThemeContext';
 
 import {
   BrowserRouter,
@@ -14,7 +18,6 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import theme from "./theme";
 
 import PostView from "./components/views/PostView";
 import CreatePostView from "./components/views/CreatePostView";
@@ -31,11 +34,13 @@ import CreateVideoPage from './components/views/CreateVideoPage';
 
 function App() {
   initiateSocketConnection();
+  const { mode } = useContext(ThemeContext);
+  const theme = createAppTheme(mode);
 
   return (
-    <ThemeProvider theme={theme}>
+    <MUIThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
-        <CssBaseline />
         <Routes>
           <Route path="/" element={<ExploreView />} />
           <Route path="/posts/:id" element={<PostView />} />
@@ -62,8 +67,16 @@ function App() {
           <Route path="/signup" element={<SignupView />} />
         </Routes>
       </BrowserRouter>
+    </MUIThemeProvider>
+  );
+}
+
+function AppWrapper() {
+  return (
+    <ThemeProvider>
+      <App />
     </ThemeProvider>
   );
 }
 
-export default App;
+export default AppWrapper;
