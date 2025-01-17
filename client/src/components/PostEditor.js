@@ -30,8 +30,6 @@ const PostEditor = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    const errors = validate();
-    setErrors(errors);
   };
 
   const handleSubmit = async (e) => {
@@ -47,11 +45,6 @@ const PostEditor = () => {
     }
   };
 
-  const validate = () => {
-    const errors = {};
-
-    return errors;
-  };
 
   return (
     <Card>
@@ -60,10 +53,11 @@ const PostEditor = () => {
           <HorizontalStack spacing={2}>
             <UserAvatar width={50} height={50} username={user.username} />
             <Typography variant="h5">
-              What would you like to post today {user.username}?
+              What video you wanna share today ?
             </Typography>
           </HorizontalStack>
         )}
+
 
         <Box component="form" onSubmit={handleSubmit}>
           <TextField

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const GoBack = () => {
   return (
     <Typography sx={{ mb: 2 }}>
-      <Link to="/"> &lt;&lt; Go back to posts</Link>
+      <Link to="/"> &lt;&lt; Go back</Link>
     </Typography>
   );
 };

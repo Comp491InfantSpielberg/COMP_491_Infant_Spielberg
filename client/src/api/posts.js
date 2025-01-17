@@ -67,25 +67,22 @@ const getUserLikes = async (postId, anchor) => {
   }
 };
 
-const createPost = async (formData) => {
+const createPost = async (post, user) => {
   try {
     const res = await fetch(BASE_URL + "api/posts", {
       method: "POST",
-      body: formData, // FormData must be sent as-is
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-access-token": user.token,
+      },
+      body: JSON.stringify(post),
     });
-
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData.error || "Failed to create post");
-    }
-
     return await res.json();
   } catch (err) {
-    console.error(err.message);
-    throw err;
+    console.log(err);
   }
 };
-
 
 const updatePost = async (postId, user, data) => {
   try {
@@ -107,6 +104,77 @@ const updatePost = async (postId, user, data) => {
 const deletePost = async (postId, user) => {
   try {
     const res = await fetch(BASE_URL + "api/posts/" + postId, {
+      method: "DELETE",
+      headers: {
+        "x-access-token": user.token,
+      },
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getComments = async (params) => {
+  try {
+    const { id } = params;
+    const res = await fetch(BASE_URL + "api/comments/post/" + id);
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getUserComments = async (params) => {
+  try {
+    const { id, query } = params;
+    const res = await fetch(
+      BASE_URL + "api/comments/user/" + id + "?" + new URLSearchParams(query)
+    );
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const createComment = async (comment, params, user) => {
+  try {
+    const { id } = params;
+    const res = await fetch(BASE_URL + "api/comments/" + id, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-access-token": user.token,
+      },
+      body: JSON.stringify(comment),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateComment = async (commentId, user, data) => {
+  try {
+    const res = await fetch(BASE_URL + "api/comments/" + commentId, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-access-token": user.token,
+      },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteComment = async (commentId, user) => {
+  try {
+    const res = await fetch(BASE_URL + "api/comments/" + commentId, {
       method: "DELETE",
       headers: {
         "x-access-token": user.token,
@@ -152,7 +220,12 @@ export {
   updatePost,
   deletePost,
   getPosts,
+  getUserComments,
   getUserLikedPosts,
+  getComments,
+  createComment,
+  deleteComment,
+  updateComment,
   likePost,
   unlikePost,
   getUserLikes,

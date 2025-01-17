@@ -1,9 +1,7 @@
 import { useTheme } from "@emotion/react";
 import {
-  Avatar,
   Button,
   Card,
-  Divider,
   Stack,
   Typography,
 } from "@mui/material";
@@ -11,7 +9,6 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { isLoggedIn } from "../helpers/authHelper";
-import ContentUpdateEditor from "./ContentUpdateEditor";
 import Loading from "./Loading";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
@@ -37,7 +34,6 @@ const Profile = (props) => {
           </Box>
 
           <Typography variant="h5">{user.username}</Typography>
-
 
           {currentUser && user._id !== currentUser.userId && (
             <Button variant="outlined" onClick={props.handleMessage}>

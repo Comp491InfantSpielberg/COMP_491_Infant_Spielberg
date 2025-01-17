@@ -11,4 +11,10 @@ router.get("/random", userControllers.getRandomUsers);
 router.get("/:username", userControllers.getUser);
 router.patch("/:id", verifyToken, userControllers.updateUser);
 
+router.post("/follow/:id", verifyToken, userControllers.follow);
+router.delete("/unfollow/:id", verifyToken, userControllers.unfollow);
+
+router.get("/followers/:id", userControllers.getFollowers);
+router.get("/following/:id", userControllers.getFollowing);
+
 module.exports = router;

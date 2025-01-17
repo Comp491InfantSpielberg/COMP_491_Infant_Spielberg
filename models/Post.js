@@ -13,7 +13,7 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    videoUrl: {
+    content: {
       type: String,
       required: true,
     },
@@ -21,14 +21,17 @@ const PostSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    commentCount: {  // Will be used later on after new push
+    commentCount: {
       type: Number,
       default: 0,
+    },
+    edited: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
 );
-
 
 PostSchema.pre("save", function (next) {
   if (this.title.length > 0) {

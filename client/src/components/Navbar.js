@@ -22,7 +22,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
-import { RiContrast2Line } from "react-icons/ri";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -40,7 +39,6 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const mobile = width < 500;
   const navbarWidth = width < 600;
 
   const updateDimensions = () => {
@@ -76,7 +74,6 @@ const Navbar = () => {
           pt: 2,
           pb: 0,
         }}
-        spacing={!mobile ? 2 : 0}
       >
         <HorizontalStack>
           <AiFillFileText
@@ -85,7 +82,6 @@ const Navbar = () => {
             onClick={() => navigate("/")}
           />
           <Typography
-            sx={{ display: mobile ? "none" : "block" }}
             variant={navbarWidth ? "h6" : "h4"}
             mr={1}
             color={theme.palette.primary.main}
@@ -109,11 +105,6 @@ const Navbar = () => {
         )}
 
         <HorizontalStack>
-          {mobile && (
-            <IconButton onClick={handleSearchIcon}>
-              <AiOutlineSearch />
-            </IconButton>
-          )}
 
           <IconButton component={Link} to={"/"}>
             <AiFillHome />

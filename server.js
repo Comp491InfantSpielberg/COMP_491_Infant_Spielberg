@@ -7,6 +7,7 @@ const app = express();
 const { authSocket, socketServer } = require("./socketServer");
 const posts = require("./routes/posts");
 const users = require("./routes/users");
+const comments = require("./routes/comments");
 const messages = require("./routes/messages");
 const PostLike = require("./models/PostLike");
 const Post = require("./models/Post");
@@ -39,6 +40,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/posts", posts);
 app.use("/api/users", users);
+app.use("/api/comments", comments);
 app.use("/api/messages", messages);
 
 if (process.env.NODE_ENV == "production") {

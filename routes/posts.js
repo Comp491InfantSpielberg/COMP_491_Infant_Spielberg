@@ -19,6 +19,4 @@ router.get(
 );
 router.get("/like/:postId/users", postControllers.getUserLikes);
 
-router.post("/", postControllers.createPost);
-
 module.exports = router;

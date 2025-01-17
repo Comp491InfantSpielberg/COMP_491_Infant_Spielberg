@@ -5,7 +5,6 @@ import {
   TextField,
   Typography,
   Link,
-  Alert,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
@@ -32,6 +31,8 @@ const SignupView = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (Object.keys(errors).length !== 0) return;
+
     const data = await signup(formData);
 
     if (data.error) {
@@ -55,7 +56,7 @@ const SignupView = () => {
           Sign Up
         </Typography>
         <Typography color="text.secondary">
-          Login <Link to="/login">Login</Link>
+          LOGIN <Link to="/login">Login</Link>
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField

@@ -1,61 +1,42 @@
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
+const User = require("../models/User");
+const Comment = require("../models/Comment");
 const PostLike = require("../models/PostLike");
 const paginate = require("../util/paginate");
-const multer = require("multer");
-const path = require("path");
+const cooldown = new Set();
 
 USER_LIKES_PAGE_SIZE = 9;
 
-// Configure Multer storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/videos/"); // Define upload directory
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
-  },
-});
-
-const upload = multer({
-  storage,
-  fileFilter: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    if (ext !== ".mp4" && ext !== ".mov" && ext !== ".avi") {
-      return cb(new Error("Only video files are allowed!"), false);
-    }
-    cb(null, true);
-  },
-});
-
-
 const createPost = async (req, res) => {
-  upload.single("video")(req, res, async (err) => {
-    if (err) {
-      return res.status(400).json({ error: "File upload error: " + err.message });
+  try {
+    const { title, content, userId } = req.body;
+
+    if (!(title && content)) {
+      throw new Error("All input required");
     }
 
-    console.log("File received:", req.file); // Debug file upload
-    console.log("Body received:", req.body); // Debug form fields
-
-    try {
-      const { title } = req.body;
-
-      if (!title || !req.file) {
-        return res.status(400).json({ error: "Title and video file are required" });
-      }
-
-      const post = await Post.create({
-        title,
-        videoUrl: `/uploads/videos/${req.file.filename}`, // Store file path
-      });
-
-      res.status(201).json(post);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
+    if (cooldown.has(userId)) {
+      throw new Error(
+        "You are posting too frequently. Please try again shortly."
+      );
     }
-  });
+
+    cooldown.add(userId);
+    setTimeout(() => {
+      cooldown.delete(userId);
+    }, 60000);
+
+    const post = await Post.create({
+      title,
+      content,
+      poster: userId,
+    });
+
+    res.json(post);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
 };
 
 const getPost = async (req, res) => {
@@ -129,6 +110,8 @@ const deletePost = async (req, res) => {
     }
 
     await post.remove();
+
+    await Comment.deleteMany({ post: post._id });
 
     return res.json(post);
   } catch (err) {
@@ -258,16 +241,7 @@ const likePost = async (req, res) => {
 
     const post = await Post.findById(postId);
 
-    if (!post) {
-      throw new Error("Post does not exist");
-    }
-
     const existingPostLike = await PostLike.findOne({ postId, userId });
-
-    if (existingPostLike) {
-      throw new Error("Post is already liked");
-    }
-
     await PostLike.create({
       postId,
       userId,

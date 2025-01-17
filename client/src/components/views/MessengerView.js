@@ -13,7 +13,6 @@ const MessengerView = () => {
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [width, setWindowWidth] = useState(0);
-  const mobile = width < 800;
   const user = isLoggedIn();
   const { state } = useLocation();
   const newConservant = state && state.user;
@@ -71,7 +70,7 @@ const MessengerView = () => {
             sx={{ height: "calc(100vh - 110px)" }}
             alignItems="stretch"
           >
-            {!mobile ? (
+            {!false ? (
               <>
                 <Grid
                   item
@@ -134,7 +133,6 @@ const MessengerView = () => {
                   setConservant={setConservant}
                   setConversations={setConversations}
                   getConversation={getConversation}
-                  mobile
                 />
               </Grid>
             )}

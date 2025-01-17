@@ -46,11 +46,6 @@ const UserMessengerEntries = (props) => {
           spacing={2}
           textAlign="center"
         >
-          <BiSad size={60} />
-          <Typography variant="h5">No Conversations</Typography>
-          <Typography color="text.secondary" sx={{ maxWidth: "70%" }}>
-            Click 'Message' on another user's profile to start a conversation
-          </Typography>
         </Stack>
       )}
     </>

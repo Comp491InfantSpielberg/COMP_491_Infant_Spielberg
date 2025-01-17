@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getUser, updateUser } from "../../api/users";
 import { isLoggedIn } from "../../helpers/authHelper";
+import CommentBrowser from "../CommentBrowser";
 
 import ErrorAlert from "../ErrorAlert";
 import FindUsers from "../FindUsers";
@@ -40,11 +41,11 @@ const ProfileView = () => {
 
     const content = e.target.content.value;
 
+    await updateUser(user, { biography: content });
 
-    setProfile({ ...profile, user: { ...profile.user } });
+    setProfile({ ...profile, user: { ...profile.user, biography: content } });
     setEditing(false);
   };
-
 
   const handleMessage = () => {
     navigate("/messenger", { state: { user: profile.user } });
@@ -64,13 +65,14 @@ const ProfileView = () => {
           key="posts"
         />
       ),
-      liked: (
-        <PostBrowser
-          profileUser={profile.user}
-          contentType="liked"
-          key="liked"
-        />
-      ),
+      //liked: (
+      // <PostBrowser
+      // profileUser={profile.user}
+      //   contentType="liked"
+      //   key="liked"
+      // />
+      // ),
+      //comments: <CommentBrowser profileUser={profile.user} />,
     };
   }
 
@@ -102,7 +104,6 @@ const ProfileView = () => {
               handleSubmit={handleSubmit}
               handleMessage={handleMessage}
             />
-
             <FindUsers />
           </Stack>
         }

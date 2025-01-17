@@ -1,17 +1,11 @@
 import {
-  Button,
   Divider,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
   Stack,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
-import { AiFillBackward, AiFillCaretLeft, AiFillMessage } from "react-icons/ai";
+import { AiFillMessage } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { getMessages, sendMessage } from "../api/messages";
 import { isLoggedIn } from "../helpers/authHelper";
@@ -173,14 +167,7 @@ const Messages = (props) => {
             spacing={2}
             sx={{ px: 2, height: "60px" }}
           >
-            {props.mobile && (
-              <IconButton
-                onClick={() => props.setConservant(null)}
-                sx={{ padding: 0 }}
-              >
-                <AiFillCaretLeft />
-              </IconButton>
-            )}
+    
             <UserAvatar
               username={props.conservant.username}
               height={30}
@@ -229,7 +216,6 @@ const Messages = (props) => {
       <AiFillMessage size={80} />
       <Typography variant="h5">Message Page</Typography>
       <Typography color="text.secondary">
-        Message Here
       </Typography>
     </Stack>
   );

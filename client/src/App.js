@@ -11,8 +11,6 @@ import {
   BrowserRouter,
   Route,
   Routes,
-  useParams,
-  useSearchParams,
 } from "react-router-dom";
 import theme from "./theme";
 
@@ -26,12 +24,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import SearchView from "./components/views/SearchView";
 import MessengerView from "./components/views/MessengerView";
 import { initiateSocketConnection, socket } from "./helpers/socketHelper";
-import { useEffect } from "react";
-import { BASE_URL } from "./config";
-import { io } from "socket.io-client";
 import React from 'react';
 import CreateVideoPage from './components/views/CreateVideoPage';
-import GenerateVideoPage from './components/views/GenerateVideoPage';
 
 function App() {
   initiateSocketConnection();
@@ -51,11 +45,7 @@ function App() {
               </PrivateRoute>
             }
           />
-
-<Route path="/videos/create" element={<CreateVideoPage />} />
-<Route path="/generate-video" element={<GenerateVideoPage />} />
-<Route path="/videos/create" element={<CreatePostView />} />
-
+          <Route path="/videos/create" element={<CreateVideoPage />} />
           <Route
             path="/messenger"
             element={

@@ -20,6 +20,7 @@ import HorizontalStack from "./util/HorizontalStack";
 
 import {} from "react-icons/ai";
 import ContentUpdateEditor from "./ContentUpdateEditor";
+import Markdown from "./Markdown";
 
 import "./postCard.css";
 import { MdCancel } from "react-icons/md";
@@ -91,17 +92,8 @@ const PostCard = (props) => {
   };
 
   return (
-    
     <Card sx={{ padding: 0 }} className="post-card">
       <Box className={preview}>
-        <div>
-          <h3>{post.title}</h3>
-          <video controls width="100%">
-            <source src={post.videoUrl} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-
-        </div>
         <HorizontalStack spacing={0} alignItems="initial">
           <Stack
             justifyContent="space-between "
@@ -180,6 +172,7 @@ const PostCard = (props) => {
                   overflow="hidden"
                   className="content"
                 >
+                  <Markdown content={post.content} />
                 </Box>
               ))}
 
@@ -191,6 +184,7 @@ const PostCard = (props) => {
                   color="text.secondary"
                   sx={{ fontWeight: "bold" }}
                 >
+                  {post.commentCount}
                 </Typography>
               </HorizontalStack>
               <Box>
